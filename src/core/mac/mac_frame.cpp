@@ -45,9 +45,12 @@
 #include "crypto/aes_ccm.hpp"
 #endif
 
+#include "openthread_ram_code.h"
+
 namespace ot {
 namespace Mac {
 
+OT_SED_RAM
 void TxFrame::Info::PrepareHeadersIn(TxFrame &aTxFrame) const
 {
     uint16_t     fcf;
@@ -701,6 +704,7 @@ exit:
     return error;
 }
 
+OT_SED_RAM
 Error Frame::GetKeyIdMode(uint8_t &aKeyIdMode) const
 {
     Error   error = kErrorNone;
@@ -859,6 +863,7 @@ exit:
     return footerLength;
 }
 
+OT_SED_RAM
 uint8_t Frame::CalculateMicSize(uint8_t aSecurityControl)
 {
     uint8_t micSize = 0;
@@ -921,6 +926,7 @@ exit:
     return index;
 }
 
+OT_SED_RAM
 uint16_t Frame::DetermineFcfAddrType(const Address &aAddress, uint16_t aBitShift)
 {
     // Determines the FCF address type for a given `aAddress`. The
@@ -948,6 +954,7 @@ uint16_t Frame::DetermineFcfAddrType(const Address &aAddress, uint16_t aBitShift
     return fcfAddrType;
 }
 
+OT_SED_RAM
 uint8_t Frame::CalculateSecurityHeaderSize(uint8_t aSecurityControl)
 {
     uint8_t size;

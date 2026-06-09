@@ -36,6 +36,8 @@
 #include "common/code_utils.hpp"
 #include "instance/instance.hpp"
 
+#include "openthread_ram_code.h"
+
 namespace ot {
 
 void Tasklet::Post(void)
@@ -90,6 +92,8 @@ void Tasklet::Scheduler::RemoveTasklet(Tasklet &aTasklet)
     }
 }
 
+
+OT_SED_RAM
 void Tasklet::Scheduler::ProcessQueuedTasklets(void)
 {
     Tasklet *tail = mTail;

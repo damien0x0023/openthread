@@ -35,6 +35,8 @@
 
 #include "instance/instance.hpp"
 
+#include "openthread_ram_code.h"
+
 namespace ot {
 
 NeighborTable::NeighborTable(Instance &aInstance)
@@ -43,6 +45,7 @@ NeighborTable::NeighborTable(Instance &aInstance)
 {
 }
 
+OT_SED_RAM
 Neighbor *NeighborTable::FindParent(const Neighbor::AddressMatcher &aMatcher)
 {
     Neighbor *neighbor = nullptr;
@@ -75,6 +78,7 @@ Neighbor *NeighborTable::FindParent(const Mac::Address &aMacAddress, Neighbor::S
     return FindParent(Neighbor::AddressMatcher(aMacAddress, aFilter));
 }
 
+OT_SED_RAM
 Neighbor *NeighborTable::FindNeighbor(const Neighbor::AddressMatcher &aMatcher)
 {
     Neighbor *neighbor = nullptr;

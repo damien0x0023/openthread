@@ -36,6 +36,8 @@
 #include "instance/instance.hpp"
 #include "utils/static_counter.hpp"
 
+#include "openthread_ram_code.h"
+
 namespace ot {
 
 RegisterLogModule("MeshForwarder");
@@ -813,6 +815,7 @@ exit:
     return frame;
 }
 
+OT_SED_RAM
 void MeshForwarder::PrepareMacHeaders(Mac::TxFrame &aTxFrame, Mac::TxFrame::Info &aTxFrameInfo, const Message *aMessage)
 {
     aTxFrameInfo.mVersion = Mac::Frame::kVersion2006;
@@ -1102,6 +1105,7 @@ uint16_t MeshForwarder::PrepareDataFrameWithNoMeshHeader(Mac::TxFrame         &a
                             /* aMeshDest */ 0xffff, /* aAddFragHeader */ false);
 }
 
+OT_SED_RAM
 Neighbor *MeshForwarder::UpdateNeighborOnSentFrame(Mac::TxFrame       &aFrame,
                                                    Error               aError,
                                                    const Mac::Address &aMacDest,
@@ -1144,6 +1148,7 @@ exit:
     return neighbor;
 }
 
+OT_SED_RAM
 void MeshForwarder::UpdateNeighborLinkFailures(Neighbor &aNeighbor,
                                                Error     aError,
                                                bool      aAllowNeighborRemove,
