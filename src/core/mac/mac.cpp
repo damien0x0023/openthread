@@ -40,6 +40,8 @@
 #include "instance/instance.hpp"
 #include "utils/static_counter.hpp"
 
+#include <openthread/openthread_ram_code.h>
+
 namespace ot {
 namespace Mac {
 
@@ -535,6 +537,7 @@ exit:
 }
 #endif
 
+OT_SED_RAM
 Error Mac::RequestDataPollTransmission(void)
 {
     Error error = kErrorNone;
@@ -554,6 +557,7 @@ exit:
     return error;
 }
 
+OT_SED_RAM
 void Mac::UpdateIdleMode(void)
 {
     bool shouldSleep = !mRxOnWhenIdle && !mPromiscuous;
@@ -608,6 +612,7 @@ exit:
 
 bool Mac::IsActiveOrPending(Operation aOperation) const { return (mOperation == aOperation) || IsPending(aOperation); }
 
+OT_SED_RAM
 void Mac::StartOperation(Operation aOperation)
 {
     if (aOperation != kOperationIdle)
@@ -633,6 +638,7 @@ void Mac::StartOperation(Operation aOperation)
     }
 }
 
+OT_SED_RAM
 void Mac::PerformNextOperation(void)
 {
     VerifyOrExit(mOperation == kOperationIdle);
@@ -868,6 +874,7 @@ bool Mac::IsJoinable(void) const
     return (numUnsecurePorts != 0);
 }
 
+OT_SED_RAM
 void Mac::ProcessTransmitSecurity(TxFrame &aFrame)
 {
     KeyManager       &keyManager = Get<KeyManager>();
@@ -965,6 +972,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void Mac::BeginTransmit(void)
 {
     TxFrame  *frame    = nullptr;
@@ -1191,6 +1199,7 @@ void Mac::RecordCcaStatus(bool aCcaSuccess, uint8_t aChannel)
     }
 }
 
+OT_SED_RAM
 void Mac::RecordFrameTransmitStatus(const TxFrame &aFrame, Error aError, uint8_t aRetryCount, bool aWillRetx)
 {
     bool      ackRequested = aFrame.GetAckRequest();
@@ -1288,6 +1297,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void Mac::HandleTransmitDone(TxFrame &aFrame, RxFrame *aAckFrame, Error aError)
 {
     bool ackRequested = aFrame.GetAckRequest();
@@ -1524,6 +1534,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void Mac::HandleTimer(void)
 {
     switch (mOperation)
@@ -1719,6 +1730,7 @@ exit:
 }
 
 #if OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2
+OT_SED_RAM
 Error Mac::ProcessEnhAckSecurity(TxFrame &aTxFrame, RxFrame &aAckFrame)
 {
     Error              error = kErrorSecurity;
@@ -2165,6 +2177,7 @@ exit:
 #endif // OPENTHREAD_CONFIG_RADIO_LINK_TREL_ENABLE
 }
 
+OT_SED_RAM
 void Mac::UpdateNeighborLinkInfo(Neighbor &aNeighbor, const RxFrame &aRxFrame)
 {
     LinkQuality oldLinkQuality = aNeighbor.GetLinkInfo().GetLinkQuality();

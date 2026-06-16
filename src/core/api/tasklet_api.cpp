@@ -35,8 +35,11 @@
 
 #include "instance/instance.hpp"
 
+#include <openthread/openthread_ram_code.h>
+
 using namespace ot;
 
+OT_SED_RAM
 void otTaskletsProcess(otInstance *aInstance)
 {
     VerifyOrExit(otInstanceIsInitialized(aInstance));
@@ -46,6 +49,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 bool otTaskletsArePending(otInstance *aInstance)
 {
     bool retval = false;

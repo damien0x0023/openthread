@@ -35,6 +35,8 @@
 
 #include "instance/instance.hpp"
 
+#include <openthread/openthread_ram_code.h>
+
 namespace ot {
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -70,6 +72,7 @@ const Timer::Scheduler::AlarmApi TimerMilli::Scheduler::sAlarmMilliApi = {
     &otPlatAlarmMilliGetNow,
 };
 
+OT_SED_RAM
 bool Timer::DoesFireBefore(const Timer &aSecondTimer, Time aNow) const
 {
     // Indicates whether the fire time of this timer is strictly
@@ -103,20 +106,24 @@ bool Timer::DoesFireBefore(const Timer &aSecondTimer, Time aNow) const
 //---------------------------------------------------------------------------------------------------------------------
 // `TimerMilli`
 
+OT_SED_RAM
 void TimerMilli::Start(uint32_t aDelay) { StartAt(GetNow(), aDelay); }
 
+OT_SED_RAM
 void TimerMilli::StartAt(TimeMilli aStartTime, uint32_t aDelay)
 {
     OT_ASSERT(aDelay <= kMaxDelay);
     FireAt(aStartTime + aDelay);
 }
 
+OT_SED_RAM
 void TimerMilli::FireAt(TimeMilli aFireTime)
 {
     mFireTime = aFireTime;
     Get<Scheduler>().Add(*this);
 }
 
+OT_SED_RAM
 void TimerMilli::FireAt(const NextFireTime &aNextFireTime)
 {
     if (aNextFireTime.IsSet())
@@ -129,6 +136,7 @@ void TimerMilli::FireAt(const NextFireTime &aNextFireTime)
     }
 }
 
+OT_SED_RAM
 void TimerMilli::FireAtIfEarlier(TimeMilli aFireTime)
 {
     if (!IsRunning() || (mFireTime > aFireTime))
@@ -137,6 +145,7 @@ void TimerMilli::FireAtIfEarlier(TimeMilli aFireTime)
     }
 }
 
+OT_SED_RAM
 void TimerMilli::FireAtIfEarlier(const NextFireTime &aNextFireTime)
 {
     if (aNextFireTime.IsSet())
@@ -145,13 +154,16 @@ void TimerMilli::FireAtIfEarlier(const NextFireTime &aNextFireTime)
     }
 }
 
+OT_SED_RAM
 void TimerMilli::Stop(void) { Get<Scheduler>().Remove(*this); }
 
+OT_SED_RAM
 void TimerMilli::RemoveAll(Instance &aInstance) { aInstance.Get<Scheduler>().RemoveAll(); }
 
 //---------------------------------------------------------------------------------------------------------------------
 // `Timer::Scheduler`
 
+OT_SED_RAM
 void Timer::Scheduler::Add(Timer &aTimer, const AlarmApi &aAlarmApi)
 {
     Timer *prev = nullptr;
@@ -180,6 +192,7 @@ void Timer::Scheduler::Add(Timer &aTimer, const AlarmApi &aAlarmApi)
     }
 }
 
+OT_SED_RAM
 void Timer::Scheduler::Remove(Timer &aTimer, const AlarmApi &aAlarmApi)
 {
     VerifyOrExit(aTimer.IsRunning());
@@ -200,6 +213,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void Timer::Scheduler::SetAlarm(const AlarmApi &aAlarmApi)
 {
     if (mTimerList.IsEmpty())
@@ -218,6 +232,7 @@ void Timer::Scheduler::SetAlarm(const AlarmApi &aAlarmApi)
     }
 }
 
+OT_SED_RAM
 void Timer::Scheduler::ProcessTimers(const AlarmApi &aAlarmApi)
 {
     Timer *timer = mTimerList.GetHead();
@@ -240,6 +255,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void Timer::Scheduler::RemoveAll(const AlarmApi &aAlarmApi)
 {
     Timer *timer;
@@ -252,7 +268,7 @@ void Timer::Scheduler::RemoveAll(const AlarmApi &aAlarmApi)
     SetAlarm(aAlarmApi);
 }
 
-extern "C" void otPlatAlarmMilliFired(otInstance *aInstance)
+extern "C" OT_SED_RAM void otPlatAlarmMilliFired(otInstance *aInstance)
 {
     VerifyOrExit(otInstanceIsInitialized(aInstance));
     AsCoreType(aInstance).Get<TimerMilli::Scheduler>().ProcessTimers();

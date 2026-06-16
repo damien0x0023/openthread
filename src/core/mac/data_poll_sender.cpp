@@ -34,6 +34,7 @@
 #include "data_poll_sender.hpp"
 
 #include "instance/instance.hpp"
+#include <openthread/openthread_ram_code.h>
 
 namespace ot {
 
@@ -62,6 +63,7 @@ const Neighbor &DataPollSender::GetParent(void) const
     return parentCandidate.IsStateValid() ? parentCandidate : Get<Mle::MleRouter>().GetParent();
 }
 
+OT_SED_RAM
 void DataPollSender::StartPolling(void)
 {
     VerifyOrExit(!mEnabled);
@@ -87,6 +89,7 @@ void DataPollSender::StopPolling(void)
     mEnabled              = false;
 }
 
+OT_SED_RAM
 Error DataPollSender::SendDataPoll(void)
 {
     Error error;
@@ -123,6 +126,7 @@ exit:
     return error;
 }
 
+OT_SED_RAM
 #if OPENTHREAD_CONFIG_MULTI_RADIO
 Error DataPollSender::GetPollDestinationAddress(Mac::Address &aDest, Mac::RadioType &aRadioType) const
 #else
@@ -190,6 +194,7 @@ uint32_t DataPollSender::GetKeepAlivePollPeriod(void) const
     return period;
 }
 
+OT_SED_RAM
 void DataPollSender::HandlePollSent(Mac::TxFrame &aFrame, Error aError)
 {
     Mac::Address macDest;
@@ -323,6 +328,7 @@ exit:
 }
 
 #if OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2
+OT_SED_RAM
 void DataPollSender::ProcessTxDone(const Mac::TxFrame &aFrame, const Mac::RxFrame *aAckFrame, Error aError)
 {
     bool sendDataPoll = false;
@@ -435,6 +441,7 @@ void DataPollSender::ResetKeepAliveTimer(void)
     }
 }
 
+OT_SED_RAM
 void DataPollSender::ScheduleNextPoll(PollPeriodSelector aPollPeriodSelector)
 {
     TimeMilli now;
@@ -478,6 +485,7 @@ void DataPollSender::ScheduleNextPoll(PollPeriodSelector aPollPeriodSelector)
     }
 }
 
+OT_SED_RAM
 uint32_t DataPollSender::CalculatePollPeriod(void) const
 {
     uint32_t period = GetDefaultPollPeriod();
@@ -517,6 +525,7 @@ uint32_t DataPollSender::CalculatePollPeriod(void) const
     return period;
 }
 
+OT_SED_RAM
 uint32_t DataPollSender::GetDefaultPollPeriod(void) const
 {
     uint32_t pollAhead = static_cast<uint32_t>(kRetxPollPeriod) * kMaxPollRetxAttempts;
@@ -540,6 +549,7 @@ uint32_t DataPollSender::GetDefaultPollPeriod(void) const
     return period;
 }
 
+OT_SED_RAM
 Mac::TxFrame *DataPollSender::PrepareDataRequest(Mac::TxFrames &aTxFrames)
 {
     Mac::TxFrame      *frame = nullptr;

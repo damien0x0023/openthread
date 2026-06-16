@@ -41,6 +41,8 @@
 #include "instance/instance.hpp"
 #include "utils/static_counter.hpp"
 
+#include <openthread/openthread_ram_code.h>
+
 namespace ot {
 namespace Mac {
 
@@ -236,6 +238,7 @@ exit:
     return error;
 }
 
+OT_SED_RAM
 Error SubMac::Sleep(void)
 {
     Error error = kErrorNone;
@@ -257,6 +260,7 @@ exit:
     return error;
 }
 
+OT_SED_RAM
 Error SubMac::Receive(uint8_t aChannel)
 {
     Error error;
@@ -308,6 +312,7 @@ void SubMac::HandleReceiveDone(RxFrame *aFrame, Error aError)
     }
 }
 
+OT_SED_RAM
 Error SubMac::Send(void)
 {
     Error error = kErrorNone;
@@ -357,6 +362,7 @@ exit:
     return error;
 }
 
+OT_SED_RAM
 void SubMac::ProcessTransmitSecurity(void)
 {
     const ExtAddress *extAddress = nullptr;
@@ -408,6 +414,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void SubMac::StartCsmaBackoff(void)
 {
     uint8_t backoffExponent = kCsmaMinBe + mCsmaBackoffs;
@@ -455,6 +462,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void SubMac::StartTimerForBackoff(uint8_t aBackoffExponent)
 {
     uint32_t backoff;
@@ -481,6 +489,7 @@ void SubMac::StartTimerForBackoff(uint8_t aBackoffExponent)
 #endif
 }
 
+OT_SED_RAM
 void SubMac::BeginTransmit(void)
 {
     Error error;
@@ -515,6 +524,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void SubMac::HandleTransmitStarted(TxFrame &aFrame)
 {
     if (mPcapCallback.IsSet())
@@ -528,6 +538,7 @@ void SubMac::HandleTransmitStarted(TxFrame &aFrame)
     }
 }
 
+OT_SED_RAM
 void SubMac::HandleTransmitDone(TxFrame &aFrame, RxFrame *aAckFrame, Error aError)
 {
     bool ccaSuccess = true;
@@ -627,6 +638,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void SubMac::SignalFrameCounterUsedOnTxDone(const TxFrame &aFrame)
 {
     uint8_t  keyIdMode;
@@ -766,6 +778,7 @@ void SubMac::HandleEnergyScanDone(int8_t aMaxRssi)
     mCallbacks.EnergyScanDone(aMaxRssi);
 }
 
+OT_SED_RAM
 void SubMac::HandleTimer(void)
 {
     switch (mState)
@@ -800,6 +813,7 @@ void SubMac::HandleTimer(void)
     }
 }
 
+OT_SED_RAM
 bool SubMac::ShouldHandleTransmitSecurity(void) const
 {
     bool swTxSecurity = true;
@@ -818,6 +832,7 @@ exit:
     return swTxSecurity;
 }
 
+OT_SED_RAM
 bool SubMac::ShouldHandleCsmaBackOff(void) const
 {
     bool swCsma = true;
@@ -836,6 +851,7 @@ exit:
     return swCsma;
 }
 
+OT_SED_RAM
 bool SubMac::ShouldHandleAckTimeout(void) const
 {
     bool swAckTimeout = true;
@@ -854,6 +870,7 @@ exit:
     return swAckTimeout;
 }
 
+OT_SED_RAM
 bool SubMac::ShouldHandleRetries(void) const
 {
     bool swRetries = true;
@@ -908,6 +925,7 @@ exit:
     return swTxDelay;
 }
 
+OT_SED_RAM
 bool SubMac::ShouldHandleTransitionToSleep(void) const { return (mRxOnWhenIdle || !RadioSupportsRxOnWhenIdle()); }
 
 void SubMac::SetState(State aState)
@@ -993,6 +1011,7 @@ exit:
     return;
 }
 
+OT_SED_RAM
 void SubMac::StartTimer(uint32_t aDelayUs)
 {
 #if OPENTHREAD_CONFIG_PLATFORM_USEC_TIMER_ENABLE

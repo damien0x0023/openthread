@@ -36,6 +36,8 @@
 
 #include "instance/instance.hpp"
 
+#include <openthread/openthread_ram_code.h>
+
 using namespace ot;
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -63,7 +65,7 @@ exit:
     return;
 }
 
-extern "C" void otPlatRadioTxStarted(otInstance *aInstance, otRadioFrame *aFrame)
+extern "C" OT_SED_RAM void otPlatRadioTxStarted(otInstance *aInstance, otRadioFrame *aFrame)
 {
     Instance     &instance = AsCoreType(aInstance);
     Mac::TxFrame &txFrame  = *static_cast<Mac::TxFrame *>(aFrame);
@@ -80,7 +82,7 @@ exit:
     return;
 }
 
-extern "C" void otPlatRadioTxDone(otInstance *aInstance, otRadioFrame *aFrame, otRadioFrame *aAckFrame, otError aError)
+extern "C" OT_SED_RAM void otPlatRadioTxDone(otInstance *aInstance, otRadioFrame *aFrame, otRadioFrame *aAckFrame, otError aError)
 {
     Instance     &instance = AsCoreType(aInstance);
     Mac::TxFrame &txFrame  = *static_cast<Mac::TxFrame *>(aFrame);
