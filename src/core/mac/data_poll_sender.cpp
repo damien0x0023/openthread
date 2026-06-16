@@ -34,7 +34,7 @@
 #include "data_poll_sender.hpp"
 
 #include "instance/instance.hpp"
-#include "openthread_ram_code.h"
+#include <openthread/openthread_ram_code.h>
 
 namespace ot {
 

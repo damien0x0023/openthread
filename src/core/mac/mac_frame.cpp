@@ -45,7 +45,7 @@
 #include "crypto/aes_ccm.hpp"
 #endif
 
-#include "openthread_ram_code.h"
+#include <openthread/openthread_ram_code.h>
 
 namespace ot {
 namespace Mac {

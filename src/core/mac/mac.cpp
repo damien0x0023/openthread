@@ -40,7 +40,7 @@
 #include "instance/instance.hpp"
 #include "utils/static_counter.hpp"
 
-#include "openthread_ram_code.h"
+#include <openthread/openthread_ram_code.h>
 
 namespace ot {
 namespace Mac {

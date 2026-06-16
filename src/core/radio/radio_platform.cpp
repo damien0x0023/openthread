@@ -36,7 +36,7 @@
 
 #include "instance/instance.hpp"
 
-#include "openthread_ram_code.h"
+#include <openthread/openthread_ram_code.h>
 
 using namespace ot;
 
